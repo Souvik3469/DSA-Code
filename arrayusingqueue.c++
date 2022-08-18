@@ -1,63 +1,58 @@
 #include <iostream>
 using namespace std;
-class node
-{
-public:
-    int data;
-    node *next;
-    node(int val)
-    {
-        data = val;
-        next = NULL;
-    }
-};
+#define n 20
 class queue
 {
-    node *front, *back;
+    int *arr;
+    int front, back;
 
 public:
     queue()
     {
-        front = NULL;
-        back = NULL;
+        arr = new int[n];
+        front = -1;
+        back = -1;
     }
+
     void push(int x)
     {
-        node *temp = new node(x);
-        if (front == NULL)
+        if (back == n - 1)
         {
-            front = temp;
-            back = temp;
-        }
-        else
-        {
-            back->next = temp;
-            back = temp;
-        }
-    }
-    void pop()
-    {
-        if (front == NULL)
-        {
-            cout << "Queue is empty" << endl;
+            cout << "Queue overflow" << endl;
             return;
         }
-        node *temp = front;
-        front = front->next;
-        delete temp;
+        back++;
+        arr[back] = x;
+
+        if (front == -1)
+        {
+            front++;
+        }
     }
+
+    void pop()
+    {
+        if (front == -1 || front > back)
+        {
+            cout << "No elements in queue" << endl;
+            return;
+        }
+
+        front++;
+    }
+
     int peek()
     {
-        if (front == NULL)
+        if (front == -1 || front > back)
         {
-            cout << "Queue is empty" << endl;
+            cout << "No elements in queue" << endl;
             return -1;
         }
-        return front->data;
+        return arr[front];
     }
     bool empty()
     {
-        if (front == NULL)
+        if (front == -1 || front > back)
         {
             return true;
         }
@@ -75,10 +70,13 @@ int main()
 
     cout << q.peek() << endl;
     q.pop();
+
     cout << q.peek() << endl;
     q.pop();
+
     cout << q.peek() << endl;
     q.pop();
+
     cout << q.peek() << endl;
     q.pop();
 

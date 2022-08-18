@@ -78,15 +78,28 @@ node *reversek(node *&head, int k)
     node *prevptr = NULL;
     node *currptr = head;
     node *nextptr;
-    int count = 0;
-    while (currptr != NULL && count < k)
+    node *check;
+    check = currptr;
+    int c = 0;
+    int c = 1;
+    while (check->next != NULL && c <= k)
+    {
+        c++;
+        check = check->next;
+    }
+    if (c < k)
+    {
+        return head;
+    }
+    c = 0;
+    while (currptr != NULL && c < k)
     {
         nextptr = currptr->next;
         currptr->next = prevptr;
 
         prevptr = currptr;
         currptr = nextptr;
-        count++;
+        c++;
     }
     if (nextptr != NULL)
     {
